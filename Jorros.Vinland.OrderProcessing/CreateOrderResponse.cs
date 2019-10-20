@@ -1,7 +1,9 @@
+using System;
+
 namespace Jorros.Vinland.OrderProcessing
 {
     public class CreateOrderResponse
     {
-        public int Id { get; set; }
+        public Guid ReferenceId { get; set; }
     }
 }

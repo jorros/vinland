@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Jorros.Vinland.OrderProcessing\Jorros.Vinland.OrderProcessing.csproj" />
+    <ProjectReference Include="..\Jorros.Vinland.WineProviders\Jorros.Vinland.WineProviders.csproj" />
   </ItemGroup>
 
   <ItemGroup>

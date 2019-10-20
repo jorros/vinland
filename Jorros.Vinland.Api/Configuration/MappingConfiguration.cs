@@ -1,4 +1,5 @@
 using AutoMapper;
+using Jorros.Vinland.Api.Models;
 using Jorros.Vinland.OrderProcessing;
 
 namespace Jorros.Vinland.Api.Configuration
@@ -7,7 +8,8 @@ namespace Jorros.Vinland.Api.Configuration
     {
         public MappingConfiguration()
         {
-            
+            CreateMap<CreateOrderModel, CreateOrderRequest>();
+            CreateMap<OrderServiceModel, OrderModel>();
         }
     }
 }

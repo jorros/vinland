@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Jorros.Vinland.OrderProcessing;
+using Jorros.Vinland.OrderProcessing.Batch;
+using Jorros.Vinland.WineProviders;
+using Jorros.Vinland.WineProviders.FrenchWinery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +30,13 @@ namespace Jorros.Vinland.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddTransient<IOrderService, BatchOrderService>();
+            services.AddTransient<IWineProvider, FrenchWineryWineProvider>();
+
+            services.Configure<BatchOrderSettings>(Configuration.GetSection("BatchOrder"));
+            
+            services.AddLogging();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

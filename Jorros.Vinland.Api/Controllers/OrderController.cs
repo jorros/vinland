@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Jorros.Vinland.Api.Models;
@@ -22,21 +24,27 @@ namespace Jorros.Vinland.Api.Controllers
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<OrderModel>> Create(OrderModel model)
+        public async Task<ActionResult<OrderModel>> Create(CreateOrderModel createModel)
         {
-            var result = await _orderService.CreateOrderAsync(_mapper.Map<CreateOrderRequest>(model));
+            var result = await _orderService.CreateOrderAsync(_mapper.Map<CreateOrderRequest>(createModel));
 
-            model.Id = result.Id;
-
-            return CreatedAtAction(nameof(GetById), new { id = result.Id }, model);
+            return CreatedAtAction(nameof(GetById), new { id = result.ReferenceId }, createModel);
         }
 
-        [HttpGet]
-        public async Task<ActionResult<OrderModel>> GetById(int id)
+        [HttpGet("{id}")]
+        public async Task<ActionResult<OrderModel>> GetById(Guid id)
         {
             var result = await _orderService.GetOrderAsync(id);
 
             return _mapper.Map<OrderModel>(result);
+        }
+
+        [HttpGet("{name}")]
+        public async Task<ActionResult<IEnumerable<OrderModel>>> GetByName(string name)
+        {
+            var result = await _orderService.GetOrdersAsync(name);
+
+            return _mapper.Map<List<OrderModel>>(result);
         }
     }
 }

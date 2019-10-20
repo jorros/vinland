@@ -78,9 +78,9 @@ namespace Jorros.Vinland.OrderProcessing.Batch
 
             order.Bottles = bottles;
 
-            var id = await _orderRepository.AddAsync(order);
+            await _orderRepository.AddAsync(order);
 
-            return new CreateOrderResponse { Id = id };
+            return new CreateOrderResponse { ReferenceId = order.ReferenceId };
         }
 
         private void AddBottles(List<Bottle> bottles, int amount, OrderBoxResponse wineryResponse = null)
