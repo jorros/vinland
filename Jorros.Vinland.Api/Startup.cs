@@ -9,6 +9,8 @@ using Jorros.Vinland.Data.Repositories;
 using Jorros.Vinland.OrderProcessing;
 using Jorros.Vinland.OrderProcessing.Batch;
 using Jorros.Vinland.OrderProcessing.MappingProfiles;
+using Jorros.Vinland.Pricing;
+using Jorros.Vinland.Pricing.FrenchWinery;
 using Jorros.Vinland.WineProviders;
 using Jorros.Vinland.WineProviders.FrenchWinery;
 using Microsoft.AspNetCore.Builder;
@@ -39,8 +41,10 @@ namespace Jorros.Vinland.Api
 
             services.AddTransient<IOrderService, BatchOrderService>();
             services.AddTransient<IWineProvider, FrenchWineryWineProvider>();
+            services.AddTransient<IPricingService, FrenchWineryPricingService>();
 
             services.Configure<BatchOrderSettings>(Configuration.GetSection("BatchOrder"));
+            services.Configure<FrenchWineryPricingSettings>(Configuration.GetSection("FrenchWineryPricing"));            
 
             services.AddDbContext<VinlandContext>(opt => opt.UseInMemoryDatabase("vinland"));
             services.AddTransient<IOrderRepository, OrderRepository>();
