@@ -7,7 +7,7 @@ namespace Jorros.Vinland.Data.Repositories
 {
     public interface IBottleRepository
     {
-        Task<int> AddAsync(Bottle bottle);
+        Task AddAsync(Bottle bottle);
 
         Task<Bottle> GetByReferenceAsync(Guid referenceId);
 

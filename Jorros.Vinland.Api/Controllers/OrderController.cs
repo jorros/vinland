@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Jorros.Vinland.Api.Controllers
 {
     [ApiController]
+    [Route("[controller]")]
     public class OrderController : ControllerBase
     {
         private readonly IMapper _mapper;
@@ -21,7 +22,7 @@ namespace Jorros.Vinland.Api.Controllers
             _orderService = orderService;
         }
 
-        [HttpPost]
+        [HttpPost("")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderModel>> Create(CreateOrderModel createModel)
@@ -36,10 +37,15 @@ namespace Jorros.Vinland.Api.Controllers
         {
             var result = await _orderService.GetOrderAsync(id);
 
+            if(result == null)
+            {
+                return NotFound();
+            }
+
             return _mapper.Map<OrderModel>(result);
         }
 
-        [HttpGet("{name}")]
+        [HttpGet("name/{name}")]
         public async Task<ActionResult<IEnumerable<OrderModel>>> GetByName(string name)
         {
             var result = await _orderService.GetOrdersAsync(name);

@@ -2,14 +2,20 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Jorros.Vinland.Api.Configuration;
+using Jorros.Vinland.Data;
+using Jorros.Vinland.Data.Repositories;
 using Jorros.Vinland.OrderProcessing;
 using Jorros.Vinland.OrderProcessing.Batch;
+using Jorros.Vinland.OrderProcessing.MappingProfiles;
 using Jorros.Vinland.WineProviders;
 using Jorros.Vinland.WineProviders.FrenchWinery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,6 +41,12 @@ namespace Jorros.Vinland.Api
             services.AddTransient<IWineProvider, FrenchWineryWineProvider>();
 
             services.Configure<BatchOrderSettings>(Configuration.GetSection("BatchOrder"));
+
+            services.AddDbContext<VinlandContext>(opt => opt.UseInMemoryDatabase("vinland"));
+            services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<IBottleRepository, BottleRepository>();
+
+            services.AddAutoMapper(typeof(MappingConfiguration), typeof(OrderProfile));
             
             services.AddLogging();
         }
@@ -46,8 +58,6 @@ namespace Jorros.Vinland.Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseHttpsRedirection();
 
             app.UseRouting();
 

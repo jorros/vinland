@@ -7,7 +7,7 @@ namespace Jorros.Vinland.Data.Repositories
 {
     public interface IOrderRepository
     {
-        Task<int> AddAsync(Order order);
+        Task AddAsync(Order order);
 
         Task<Order> GetByReferenceAsync(Guid referenceId);
 

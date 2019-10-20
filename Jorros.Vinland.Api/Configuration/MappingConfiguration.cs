@@ -9,7 +9,10 @@ namespace Jorros.Vinland.Api.Configuration
         public MappingConfiguration()
         {
             CreateMap<CreateOrderModel, CreateOrderRequest>();
-            CreateMap<OrderServiceModel, OrderModel>();
+            CreateMap<OrderServiceModel, OrderModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.ReferenceId));
+            CreateMap<BottleServiceModel, BottleModel>()
+                .ForMember(x => x.Id, opt => opt.MapFrom(y => y.ReferenceId));;
         }
     }
 }
