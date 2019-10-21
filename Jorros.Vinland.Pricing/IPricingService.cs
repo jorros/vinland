@@ -1,11 +1,11 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 
 namespace Jorros.Vinland.Pricing
 {
     public interface IPricingService
     {
-        float GetWineCosts(int amountBottles);
+        Task<float> GetWineCostsAsync(int amountBottles);
         
-        float GetShippingCosts(int amountBottles);
+        Task<float> GetShippingCostsAsync(int amountBottles);
     }
 }

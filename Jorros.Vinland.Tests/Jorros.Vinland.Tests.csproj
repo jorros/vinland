@@ -21,6 +21,7 @@
     <ProjectReference Include="..\Jorros.Vinland.OrderProcessing\Jorros.Vinland.OrderProcessing.csproj" />
     <ProjectReference Include="..\Jorros.Vinland.Data\Jorros.Vinland.Data.csproj" />
     <ProjectReference Include="..\Jorros.Vinland.WineProviders\Jorros.Vinland.WineProviders.csproj" />
+    <ProjectReference Include="..\Jorros.Vinland.Pricing\Jorros.Vinland.Pricing.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Jorros.Vinland.Api.Models;
@@ -29,10 +30,14 @@ namespace Jorros.Vinland.Api.Controllers
         {
             var result = await _orderService.CreateOrderAsync(_mapper.Map<CreateOrderRequest>(createModel));
 
-            return CreatedAtAction(nameof(GetById), new { id = result.ReferenceId }, createModel);
+            var order = await _orderService.GetOrderAsync(result.ReferenceId); 
+
+            return CreatedAtAction(nameof(GetById), new { id = result.ReferenceId }, order);
         }
 
         [HttpGet("{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<OrderModel>> GetById(Guid id)
         {
             var result = await _orderService.GetOrderAsync(id);
@@ -46,9 +51,16 @@ namespace Jorros.Vinland.Api.Controllers
         }
 
         [HttpGet("name/{name}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<ActionResult<IEnumerable<OrderModel>>> GetByName(string name)
         {
             var result = await _orderService.GetOrdersAsync(name);
+
+            if(!result.Any())
+            {
+                return NotFound();
+            }
 
             return _mapper.Map<List<OrderModel>>(result);
         }

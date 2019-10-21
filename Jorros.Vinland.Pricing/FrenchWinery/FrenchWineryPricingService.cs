@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
 
 namespace Jorros.Vinland.Pricing.FrenchWinery
@@ -12,7 +13,7 @@ namespace Jorros.Vinland.Pricing.FrenchWinery
             _settings = settings.Value;
         }
         
-        public float GetShippingCosts(int amountBottles)
+        public Task<float> GetShippingCostsAsync(int amountBottles)
         {
             var numBoxes = (float)Math.Ceiling((double)amountBottles / _settings.BottlesInBox);
             float shipping = numBoxes * _settings.ShippingCostsPerBox;
@@ -22,12 +23,12 @@ namespace Jorros.Vinland.Pricing.FrenchWinery
                 shipping = shipping - shipping * _settings.Discount;
             }
 
-            return shipping;
+            return Task.FromResult(shipping);
         }
 
-        public float GetWineCosts(int amountBottles)
+        public Task<float> GetWineCostsAsync(int amountBottles)
         {
-            return amountBottles * _settings.PricePerBottle;
+            return Task.FromResult(amountBottles * _settings.PricePerBottle);
         }
     }
 }
