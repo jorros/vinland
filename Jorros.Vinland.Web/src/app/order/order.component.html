@@ -1,0 +1,17 @@
+<mat-card-header>
+  <mat-card-title>
+    Enter new order
+  </mat-card-title>
+</mat-card-header>
+<mat-card-content class="dashboard-card-content">
+  <div>
+    <form class="order-form">
+      <mat-form-field>
+        <input matInput type="number" [(ngModel)]="amount" name="amount" required placeholder="Amount">
+      </mat-form-field>
+    </form>
+  </div>
+</mat-card-content>
+<mat-card-actions>
+  <button mat-raised-button (click)="submit()" color="primary">Submit</button>
+</mat-card-actions>

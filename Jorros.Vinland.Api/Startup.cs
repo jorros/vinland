@@ -44,14 +44,22 @@ namespace Jorros.Vinland.Api
             services.AddTransient<IPricingService, FrenchWineryPricingService>();
 
             services.Configure<BatchOrderSettings>(Configuration.GetSection("BatchOrder"));
-            services.Configure<FrenchWineryPricingSettings>(Configuration.GetSection("FrenchWineryPricing"));            
+            services.Configure<FrenchWineryPricingSettings>(Configuration.GetSection("FrenchWineryPricing"));
 
             services.AddDbContext<VinlandContext>(opt => opt.UseInMemoryDatabase("vinland"));
             services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient<IBottleRepository, BottleRepository>();
 
             services.AddAutoMapper(typeof(MappingConfiguration), typeof(OrderProfile));
-            
+
+            services.AddCors(options =>
+            {
+                options.AddDefaultPolicy(builder => builder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod());
+            });
+
             services.AddLogging();
         }
 
@@ -66,6 +74,8 @@ namespace Jorros.Vinland.Api
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {

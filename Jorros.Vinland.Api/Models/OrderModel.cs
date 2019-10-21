@@ -10,5 +10,7 @@ namespace Jorros.Vinland.Api.Models
         public string User { get; set; }
 
         public IEnumerable<BottleModel> Bottles { get; set; }
+
+        public DateTime Date { get; set; }
     }
 }
