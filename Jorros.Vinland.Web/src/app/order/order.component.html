@@ -7,8 +7,10 @@
   <div>
     <form class="order-form">
       <mat-form-field>
-        <input matInput type="number" [(ngModel)]="amount" name="amount" required placeholder="Amount">
+        <input matInput type="number" (change)="onAmountUpdate()" [(ngModel)]="amount" name="amount" required placeholder="Amount">
       </mat-form-field>
+      <p>Estimated shipping cost: {{estimatedCostsShipping}}</p>
+      <p>Estimated wine cost: {{estimatedCostsWine}}</p>
     </form>
   </div>
 </mat-card-content>

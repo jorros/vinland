@@ -12,6 +12,16 @@ export class OrderComponent {
   constructor(private repository: RepositoryService, private user: UserService) { }
 
   amount: number;
+  estimatedCostsWine: number = 0;
+  estimatedCostsShipping: number = 0;
+
+  onAmountUpdate() {
+    this.repository.getPrice(this.amount)
+      .subscribe(x => {
+        this.estimatedCostsShipping = x.shipping
+        this.estimatedCostsWine = x.wine
+      })
+  }
 
   onSubmit() {
     this.repository.createNewOrder(this.user.name, this.amount)

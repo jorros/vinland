@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from './../../../environments/environment';
 import { Order } from 'src/app/_interfaces/order.model';
+import { Price } from 'src/app/_interfaces/price.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,5 +24,9 @@ export class RepositoryService {
               headers: new HttpHeaders({ 'Content-Type': 'application/json' })
             }
           )
+  }
+
+  public getPrice(amount: number) {
+    return this.http.get<Price>(`${environment.apiUrl}/pricing/?amount=${amount}`);
   }
 }
