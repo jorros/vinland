@@ -11,8 +11,6 @@ import { RepositoryService } from './shared/services/repository.service'
 import { MatCardModule } from '@angular/material/card';
 import { OrderComponent } from './order/order.component';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatTableModule } from '@angular/material/table';
@@ -37,8 +35,6 @@ import { UserService } from './shared/services/user.service';
     BrowserAnimationsModule,
     MatCardModule,
     MatGridListModule,
-    MatMenuModule,
-    MatIconModule,
     MatButtonModule,
     LayoutModule,
     MatTableModule,

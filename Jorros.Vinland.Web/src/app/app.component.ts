@@ -14,7 +14,8 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     const dialogRef = this.dialog.open(NameLoginComponent, {
       width: '250px',
-      data: {}
+      data: {},
+      disableClose: true
     });
 
     dialogRef.afterClosed().subscribe(result => {

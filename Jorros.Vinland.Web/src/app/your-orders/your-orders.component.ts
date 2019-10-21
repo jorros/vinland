@@ -3,8 +3,8 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Order } from '../_interfaces/order.model';
 import { OrderSummary } from '../_interfaces/order-summary.model';
-import { interval } from 'rxjs';
-import { switchMap } from 'rxjs/operators'
+import { interval, empty } from 'rxjs';
+import { switchMap, catchError } from 'rxjs/operators'
 import { RepositoryService } from '../shared/services/repository.service';
 import { UserService } from '../shared/services/user.service';
 
@@ -26,10 +26,10 @@ export class YourOrdersComponent implements OnInit {
 
   public refreshOrders() {
     interval(1000)
-      .pipe(switchMap((x) => this.repository.getOrdersByName(this.user.name)))
+      .pipe(switchMap(() => this.repository.getOrdersByName(this.user.name)
+      .pipe(catchError(err => empty()))))
       .subscribe(res => {
-        let result = res as Order[]
-        this.orders.data = result.map(x => {
+        this.orders.data = res.map(x => {
           let ret: OrderSummary =
           {
             id: x.id,
@@ -39,6 +39,8 @@ export class YourOrdersComponent implements OnInit {
           }
           return ret;
         });
+      }, error => {
+        console.log('error appeared')
       });
   }
 
