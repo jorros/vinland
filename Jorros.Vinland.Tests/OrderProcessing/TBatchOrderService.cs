@@ -171,6 +171,26 @@ namespace Jorros.Vinland.Tests.OrderProcessing
         }
 
         [Test]
+        public async Task CreateOrderWithNegativeAmountShouldReturnEmptyResponse()
+        {
+            // Arrange
+            var fixture = new Fixture()
+                .Customize(new AutoMoqCustomization());
+
+            var sut = fixture.Create<BatchOrderService>();
+
+            // Act
+            var result = await sut.CreateOrderAsync(new CreateOrderRequest
+            {
+                BottlesAmount = -1,
+                User = fixture.Create<string>()
+            });
+
+            // Assert
+            Assert.AreEqual(Guid.Empty, result.ReferenceId);
+        }
+
+        [Test]
         public async Task GetOrderShouldReturnOrder()
         {
             // Arrange

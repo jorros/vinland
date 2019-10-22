@@ -28,6 +28,11 @@ namespace Jorros.Vinland.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<OrderModel>> Create(CreateOrderModel createModel)
         {
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            
             var result = await _orderService.CreateOrderAsync(_mapper.Map<CreateOrderRequest>(createModel));
 
             var order = await _orderService.GetOrderAsync(result.ReferenceId); 

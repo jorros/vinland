@@ -30,6 +30,11 @@ namespace Jorros.Vinland.OrderProcessing.Batch
 
         public async Task<CreateOrderResponse> CreateOrderAsync(CreateOrderRequest request)
         {
+            if(request.BottlesAmount < 1)
+            {
+                return new CreateOrderResponse();
+            }
+            
             var bottles = new List<Bottle>();
             var numFullBatchesInOrder = Math.Floor((double)request.BottlesAmount / _settings.BottlesPerBox);
 
